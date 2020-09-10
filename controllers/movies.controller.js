@@ -23,5 +23,9 @@ module.exports = {
 	movies: async () => {
 		let movies = await dbController.getMovies();
 		return movies;
+	},
+	movie: async (movie) => {
+		let theMovie = await dbController.getMovie(movie);
+		return theMovie;
 	}
 };

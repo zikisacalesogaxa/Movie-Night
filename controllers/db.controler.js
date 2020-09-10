@@ -14,7 +14,7 @@ module.exports = {
 			});
 	},
 	getMovie: async function(movie) {
-		console.log('getting movie');
+		console.log('getting movie', movie);
 		return _movieModel
 			.findOne({ movie: movie })
 			.then((movie) => {
