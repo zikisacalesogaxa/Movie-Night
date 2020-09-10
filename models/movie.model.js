@@ -5,23 +5,14 @@ const movieSchema = mongoose.Schema({
 		type: String,
 		unique: true
 	},
-	booking: {
-		username: {
-			type: String,
-			unique: true
-		},
-		time: {
-			type: String
-		}
+	two_pm: {
+		type: Array
 	},
-	cancellation: {
-		username: {
-			type: String,
-			unique: true
-		},
-		time: {
-			type: String
-		}
+	five_pm: {
+		type: Array
+	},
+	eight_pm: {
+		type: Array
 	}
 });
 
