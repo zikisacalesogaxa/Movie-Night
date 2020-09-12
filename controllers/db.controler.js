@@ -26,6 +26,15 @@ module.exports = {
 	},
 	postMovie: async function(movie) {
 		console.log('creating movie');
+		let theMovie = await this.getMovie(movie);
+		if (!theMovie) {
+			let newMovie = await this.postMovie(movie);
+			console.log('created movie', newMovie);
+
+			return this.updateMovie(username, newMovie.movie, time, 'book').then((movie) => {
+				return movie;
+			});
+		}
 		return _movieModel
 			.create({ movie: movie })
 			.then((movie) => {
@@ -68,15 +77,6 @@ module.exports = {
 						console.log(err);
 					});
 			}
-		}
-
-		if (!theMovie) {
-			let newMovie = await this.postMovie(movie);
-			console.log('created movie', newMovie);
-
-			return this.updateMovie(username, newMovie.movie, time, 'book').then((movie) => {
-				return movie;
-			});
 		}
 	},
 	getUser: async function(username) {

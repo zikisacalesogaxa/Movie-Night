@@ -26,6 +26,18 @@ router.get('/movie', function(req, res, next) {
 	});
 });
 
+// Create movie
+router.post('/movie', function(req, res, next) {
+	let status = res.statusCode;
+	let { movie } = req.body;
+	movieController.create(username, movie, time).then((movie) => {
+		res.json({
+			status,
+			movie
+		});
+	});
+});
+
 // Book movie
 router.post('/movie/book', function(req, res, next) {
 	let status = res.statusCode;

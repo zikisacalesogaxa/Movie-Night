@@ -12,6 +12,12 @@ module.exports = {
 			});
 		});
 	},
+	create: async (movieName) => {
+		return await dbController.postMovie(movieName).then((movie) => {
+			console.log('created', movie);
+			return movie;
+		});
+	},
 	cancel: async (username, movieName, time) => {
 		return await dbController.updateMovie(username, movieName, time, 'cancel').then((movie) => {
 			return dbController.getMovie(movie.movie).then((updatedMovie) => {
