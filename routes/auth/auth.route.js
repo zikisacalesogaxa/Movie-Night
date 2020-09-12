@@ -3,8 +3,19 @@ var router = express.Router();
 
 var authController = require('../../controllers/auth.controller');
 
+/* GET users. */
+router.get('/movies', function(req, res, next) {
+	let status = res.statusCode;
+	authController.getMovies().then((movies) => {
+		res.json({
+			status,
+			movies
+		});
+	});
+});
+
 /* POST book. */
-router.post('/book', function(req, res, next) {
+router.post('/movie/book', function(req, res, next) {
 	let status = res.statusCode;
 	let { username, movie, time } = req.body;
 	authController.bookMovie(username, movie, time).then((booked) => {
@@ -16,7 +27,7 @@ router.post('/book', function(req, res, next) {
 });
 
 /* POST cancel. */
-router.post('/cancel', function(req, res, next) {
+router.post('/movie/cancel', function(req, res, next) {
 	let status = res.statusCode;
 	let { username, movie, time } = req.body;
 	authController.cancelMovie(username, movie, time).then((cancelled) => {

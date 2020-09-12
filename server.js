@@ -29,10 +29,10 @@ app.use((req, res, next) => {
 // API routes
 app.get('/', (req, res) => {
 	res.json({
-		auth: '/api/v1/'
+		auth: '/api/v1'
 	});
 });
 
-app.use('/api/v1/movie', authRouter);
+app.use('/api/v1', authRouter);
 
 module.exports = app;
