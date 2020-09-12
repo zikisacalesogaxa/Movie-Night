@@ -30,7 +30,7 @@ router.get('/movie', function(req, res, next) {
 router.post('/movie', function(req, res, next) {
 	let status = res.statusCode;
 	let { movie } = req.body;
-	movieController.create(username, movie, time).then((movie) => {
+	movieController.create(movie).then((movie) => {
 		res.json({
 			status,
 			movie
