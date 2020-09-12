@@ -3,17 +3,15 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
 	username: {
 		type: String,
-		unique: true,
 		required: true
 	},
-	password: {
-		type: String,
-		required: true
-	},
-	booked_movies: {
+	two_pm: {
 		type: Array
 	},
-	cancelled_movies: {
+	five_pm: {
+		type: Array
+	},
+	eight_pm: {
 		type: Array
 	}
 });

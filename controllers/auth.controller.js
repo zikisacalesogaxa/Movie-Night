@@ -1,47 +1,50 @@
 var _userModel = require('../models/user.model');
-var bcrypt = require('bcrypt');
-var saltRounds = 10;
 
 module.exports = {
-	login: async (username, password) => {
+	bookMovie: async (username, movie, time) => {
+		let filter = { username: username };
+		return _userModel.findOne(filter).then((user) => {
+			if (user) {
+				return _userModel
+					.findOneAndUpdate(filter, {
+						$push: {
+							[time]: movie
+						}
+					})
+					.then((updatedUser) => {
+						return updatedUser;
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} else {
+				return _userModel
+					.create({
+						username: username,
+						[time]: [ movie ]
+					})
+					.then((newUser) => {
+						return newUser;
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			}
+		});
+	},
+	cancelMovie: async (username, movie, time) => {
+		let filter = { username: username };
 		return _userModel
-			.findOne({
-				username: username
-			})
-			.then((user) => {
-				let passwordHash = user.password;
-				if (bcrypt.compareSync(password, passwordHash)) {
-					return true;
-				} else {
-					return false;
+			.findOneAndUpdate(filter, {
+				$pull: {
+					[time]: movie
 				}
+			})
+			.then((updatedUser) => {
+				return updatedUser;
 			})
 			.catch((err) => {
 				console.log(err);
-			});
-	},
-	signup: async (username, password) => {
-		var passwordHash = bcrypt.hashSync(password, saltRounds);
-		return _userModel
-			.findOne({
-				username: username
-			})
-			.then((user) => {
-				if (user) {
-					return false;
-				} else {
-					return _userModel
-						.create({
-							username: username,
-							password: passwordHash
-						})
-						.then((user) => {
-							return true;
-						})
-						.catch((err) => {
-							console.log(err);
-						});
-				}
 			});
 	}
 };

@@ -3,26 +3,26 @@ var router = express.Router();
 
 var authController = require('../../controllers/auth.controller');
 
-/* POST login. */
-router.post('/login', function(req, res, next) {
+/* POST book. */
+router.post('/book', function(req, res, next) {
 	let status = res.statusCode;
-	let { username, password } = req.body;
-	authController.login(username, password).then((login) => {
+	let { username, movie, time } = req.body;
+	authController.bookMovie(username, movie, time).then((booked) => {
 		res.json({
 			status,
-			login
+			booked
 		});
 	});
 });
 
-/* POST signup. */
-router.post('/signup', function(req, res, next) {
+/* POST cancel. */
+router.post('/cancel', function(req, res, next) {
 	let status = res.statusCode;
-	let { username, password } = req.body;
-	authController.signup(username, password).then((signedup) => {
+	let { username, movie, time } = req.body;
+	authController.cancelMovie(username, movie, time).then((cancelled) => {
 		res.json({
 			status,
-			signedup
+			cancelled
 		});
 	});
 });

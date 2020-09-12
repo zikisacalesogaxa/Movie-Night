@@ -4,7 +4,6 @@ var express = require('express');
 var logger = require('morgan');
 var cors = require('cors');
 
-var moviesRouter = require('./routes/movies.route');
 var authRouter = require('./routes/auth/auth.route');
 
 var app = express();
@@ -30,12 +29,10 @@ app.use((req, res, next) => {
 // API routes
 app.get('/', (req, res) => {
 	res.json({
-		getMovies: '/api/v1/movies',
-		auth: '/api/v1/auth'
+		auth: '/api/v1/'
 	});
 });
 
-app.use('/api/v1/', moviesRouter);
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/movie', authRouter);
 
 module.exports = app;
