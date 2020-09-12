@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const movieSchema = mongoose.Schema({
-	movie: {
+	movie_name: {
 		type: String,
-		unique: true
+		unique: true,
+		required: true
 	},
 	two_pm: {
 		type: Array

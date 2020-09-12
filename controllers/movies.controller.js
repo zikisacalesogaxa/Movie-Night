@@ -4,7 +4,7 @@ var _userModel = require('../models/user.model');
 var dbController = require('../controllers/db.controler');
 
 module.exports = {
-	book: async (username, movieName, time) => {
+	bookMovie: async (username, movieName, time) => {
 		return await dbController.updateMovie(username, movieName, time, 'book').then((movie) => {
 			return dbController.getMovie(movie.movie).then((updatedMovie) => {
 				console.log('booked', updatedMovie);
@@ -12,13 +12,13 @@ module.exports = {
 			});
 		});
 	},
-	create: async (movieName) => {
+	createMovie: async (movieName) => {
 		return await dbController.postMovie(movieName).then((movie) => {
 			console.log('created', movie);
 			return movie;
 		});
 	},
-	cancel: async (username, movieName, time) => {
+	cancelMovie: async (username, movieName, time) => {
 		return await dbController.updateMovie(username, movieName, time, 'cancel').then((movie) => {
 			return dbController.getMovie(movie.movie).then((updatedMovie) => {
 				console.log('cancelled', updatedMovie);
@@ -26,11 +26,11 @@ module.exports = {
 			});
 		});
 	},
-	movies: async () => {
+	getMovies: async () => {
 		let movies = await dbController.getMovies();
 		return movies;
 	},
-	movie: async (movie) => {
+	getMovie: async (movie) => {
 		let theMovie = await dbController.getMovie(movie);
 		return theMovie;
 	}

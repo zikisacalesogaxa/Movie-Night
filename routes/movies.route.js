@@ -6,7 +6,7 @@ var movieController = require('../controllers/movies.controller');
 /* GET movies listing. */
 router.get('/movies', function(req, res, next) {
 	let status = res.statusCode;
-	movieController.movies().then((movies) => {
+	movieController.getMovies().then((movies) => {
 		res.json({
 			status,
 			movies
@@ -17,8 +17,8 @@ router.get('/movies', function(req, res, next) {
 /* GET movie listing. */
 router.get('/movie', function(req, res, next) {
 	let status = res.statusCode;
-	let { movie } = req.query;
-	movieController.movie(movie).then((movie) => {
+	let { movieName } = req.query;
+	movieController.getMovie(movieName).then((movie) => {
 		res.json({
 			status,
 			movie
@@ -29,8 +29,8 @@ router.get('/movie', function(req, res, next) {
 // Create movie
 router.post('/movie', function(req, res, next) {
 	let status = res.statusCode;
-	let { movie } = req.body;
-	movieController.create(movie).then((movie) => {
+	let { movieName } = req.body;
+	movieController.createMovie(movieName).then((movie) => {
 		res.json({
 			status,
 			movie
@@ -39,10 +39,10 @@ router.post('/movie', function(req, res, next) {
 });
 
 // Book movie
-router.post('/movie/book', function(req, res, next) {
+router.put('/movie/book', function(req, res, next) {
 	let status = res.statusCode;
 	let { username, movie, time } = req.body;
-	movieController.book(username, movie, time).then((movie) => {
+	movieController.bookMovie(username, movie, time).then((movie) => {
 		res.json({
 			status,
 			movie
@@ -51,10 +51,10 @@ router.post('/movie/book', function(req, res, next) {
 });
 
 // Cancel movie
-router.post('/movie/cancel', function(req, res, next) {
+router.put('/movie/cancel', function(req, res, next) {
 	let status = res.statusCode;
 	let { username, movie, time } = req.body;
-	movieController.cancel(username, movie, time).then((movie) => {
+	movieController.cancelMovie(username, movie, time).then((movie) => {
 		res.json({
 			status,
 			movie

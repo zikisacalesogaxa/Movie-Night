@@ -16,7 +16,7 @@ module.exports = {
 	getMovie: async function(movie) {
 		console.log('getting movie', movie);
 		return _movieModel
-			.findOne({ movie: movie })
+			.findOne({ movie_name: movie })
 			.then((movie) => {
 				return movie;
 			})
@@ -24,29 +24,31 @@ module.exports = {
 				console.log(err);
 			});
 	},
-	postMovie: async function(movie) {
-		console.log('creating movie');
-		let theMovie = await this.getMovie(movie);
-		if (!theMovie) {
-			let newMovie = await this.postMovie(movie);
-			console.log('created movie', newMovie);
-
-			return this.updateMovie(username, newMovie.movie, time, 'book').then((movie) => {
-				return movie;
-			});
-		}
+	postMovie: async function(moviename) {
+		console.log('creating movie', moviename);
 		return _movieModel
-			.create({ movie: movie })
+			.findOne({ movie_name: moviename })
 			.then((movie) => {
-				return movie;
+				if (!movie) {
+					return _movieModel
+						.create({ movie_name: moviename })
+						.then((newMovie) => {
+							return newMovie;
+						})
+						.catch((err) => {
+							console.log(err);
+						});
+				} else {
+					return 'movie exists';
+				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	},
 	updateMovie: async function(username, movie, time, type) {
-		console.log('updating movie');
-		let filter = { movie: movie };
+		console.log('updating movie', movie);
+		let filter = { movie_name: movie };
 		let theMovie = await this.getMovie(movie);
 		if (theMovie) {
 			if (type == 'book') {
@@ -78,30 +80,5 @@ module.exports = {
 					});
 			}
 		}
-	},
-	getUser: async function(username) {
-		console.log('getting user');
-		return _userModel
-			.find({ username: username })
-			.then((user) => {
-				return user;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	},
-	postUser: async function() {
-		console.log('creating user');
-		return _userModel
-			.create({
-				username: username,
-				password: password
-			})
-			.then((user) => {
-				return user;
-			})
-			.catch((err) => {
-				console.log(err);
-			});
 	}
 };
